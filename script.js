@@ -111,7 +111,8 @@ const scenariosData = [
 let sessionScenarios = []; // Mảng chứa 7 kịch bản cho phiên chơi hiện tại
 const MAX_SCENARIOS = 7; // Giới hạn 7 câu hỏi
 
-let current = 0, score = 0, scamScore = 0, leaderboard = [];
+let current = 0, score = 0, scamScore = 0;
+let leaderboard = JSON.parse(localStorage.getItem('shieldLeaderboard')) || [];
 
 // --- HÀM KHỞI ĐỘNG/RESET ---
 
@@ -310,37 +311,69 @@ function addNextButton() {
 // --- HÀM LEADERBOARD VÀ MODAL ---
 
 function updateLeaderboard() {
-    // Tạm lưu điểm vào Local Storage (cần nâng cấp để lưu trữ lâu dài hơn)
     const playerName = prompt("Nhập tên của bạn để lưu điểm vào Bảng xếp hạng:", "Anonymous");
-    if (playerName) {
-        leaderboard.push({ name: playerName, finalScore: score, attempts: scamScore });
-    } else {
-        leaderboard.push({ name: 'Vô danh', finalScore: score, attempts: scamScore });
-    }
+    const playerData = { 
+        name: playerName || 'Vô danh', 
+        finalScore: score, 
+        attempts: scamScore,
+        date: new Date().toLocaleDateString('vi-VN')
+    };
 
-    // Sắp xếp: ưu tiên điểm cao hơn, nếu bằng điểm thì ưu tiên số lỗi (Scam Score) thấp hơn
+    // Thêm người chơi vào leaderboard
+    leaderboard.push(playerData);
+    
+    // Sắp xếp: ưu tiên điểm cao hơn, nếu bằng điểm thì ưu tiên số lỗi thấp hơn
     leaderboard.sort((a, b) => {
         if (b.finalScore !== a.finalScore) {
             return b.finalScore - a.finalScore;
         }
         return a.attempts - b.attempts;
     });
-  const newBadges = badgeSystem.checkBadges(score, scamScore, 0);
+
+    // Giới hạn top 10
+    leaderboard = leaderboard.slice(0, 10);
+    
+    // LƯU VÀO LOCAL STORAGE
+    localStorage.setItem('shieldLeaderboard', JSON.stringify(leaderboard));
+    
+    // Hiển thị leaderboard
+    displayLeaderboard();
+    
+    // Hiển thị modal chúc mừng
+    document.getElementById("badge-text").innerHTML = `Bạn đã hoàn thành ${sessionScenarios.length} bài tập! <br>Tổng điểm: <strong>${score}</strong>, Số lỗi: <strong>${scamScore}</strong>.<br> Kết quả của bạn đã được cập nhật lên BXH!`;
+    document.getElementById("badge-modal").style.display = "block";
+    
+    // Kiểm tra huy hiệu
+    const newBadges = badgeSystem.checkBadges(score, scamScore, 0);
     newBadges.forEach(badge => badgeSystem.showBadgeNotification(badge));
     badgeSystem.displayBadges();
-    
+}
+
+function displayLeaderboard() {
     const listEl = document.getElementById("leaderboard-list");
+    if (!listEl) return;
+    
     listEl.innerHTML = '';
 
-    leaderboard.slice(0, 10).forEach((item, index) => {
+    leaderboard.forEach((item, index) => {
         const li = document.createElement('li');
         li.innerHTML = `<strong>${index + 1}. ${item.name}</strong>: ${item.finalScore} điểm (Lỗi: ${item.attempts})`;
         listEl.appendChild(li);
     });
+}
 
-    // Hiển thị modal chúc mừng
-    document.getElementById("badge-text").innerHTML = `Bạn đã hoàn thành ${sessionScenarios.length} bài tập! <br>Tổng điểm: **${score}**, Số lỗi: **${scamScore}**.<br> Kết quả của bạn đã được cập nhật lên BXH!`;
-    document.getElementById("badge-modal").style.display = "block";
+// TỰ ĐỘNG HIỂN THỊ LEADERBOARD KHI TRANG LOAD
+document.addEventListener('DOMContentLoaded', function() {
+    displayLeaderboard();
+});
+
+// THÊM NÚT RESET LEADERBOARD (tùy chọn)
+function resetLeaderboard() {
+    if (confirm("Bạn có chắc muốn xóa toàn bộ bảng xếp hạng?")) {
+        leaderboard = [];
+        localStorage.removeItem('shieldLeaderboard');
+        displayLeaderboard();
+    }
 }
 
 function closeBadge() {
@@ -476,5 +509,6 @@ const badgeCSS = `
 const style = document.createElement('style');
 style.textContent = badgeCSS;
 document.head.appendChild(style);
+
 
 
