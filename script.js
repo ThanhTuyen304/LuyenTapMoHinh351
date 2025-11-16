@@ -344,6 +344,10 @@ function closeBadge() {
     document.getElementById("badge-modal").style.display = "none";
 
 }
+// ... (tất cả code hiện tại của bạn ở đây) ...
+
+// === THÊM CODE NÀY VÀO CUỐI FILE script.js ===
+
 // Hệ thống huy hiệu
 const badgeSystem = {
     badges: [
@@ -415,3 +419,58 @@ const badgeSystem = {
         `).join('');
     }
 };
+
+// Thêm CSS cho badge system
+const badgeCSS = `
+/* Badge System */
+.badge-notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: linear-gradient(135deg, #ffd700, #ffed4e);
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    z-index: 1000;
+    animation: slideInRight 0.5s ease;
+}
+
+.badge-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 8px;
+    background: #f8f9fa;
+}
+
+.badge-item.earned {
+    background: #e8f5e8;
+    border-left: 4px solid #28a745;
+}
+
+.badge-item.locked {
+    opacity: 0.6;
+    background: #f1f1f1;
+}
+
+.badge-icon {
+    font-size: 2em;
+    margin-right: 15px;
+}
+
+.badge-info {
+    flex: 1;
+}
+
+@keyframes slideInRight {
+    from { transform: translateX(100%); }
+    to { transform: translateX(0); }
+}
+`;
+
+// Thêm CSS vào document
+const style = document.createElement('style');
+style.textContent = badgeCSS;
+document.head.appendChild(style);
+
