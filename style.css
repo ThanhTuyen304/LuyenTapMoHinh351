@@ -637,5 +637,51 @@ footer {
 .leaderboard, .badge-section {
     margin-left: 20px;
 }
+/* GHI ĐÈ HOÀN TOÀN - BẢNG XẾP HẠNG & HUY HIỆU SIÊU NHỎ */
+.leaderboard {
+    width: 140px !important;
+    max-width: 140px !important;
+    min-width: 140px !important;
+    padding: 8px !important;
+    margin: 5px !important;
+    font-size: 12px !important;
+    background: #e0f0ff;
+    border-radius: 10px;
+    box-shadow: 0 3px 10px rgba(0, 60, 100, 0.1);
+    box-sizing: border-box;
+    flex-shrink: 0;
+}
+
+.badge-section {
+    width: 140px !important;
+    max-width: 140px !important;
+    min-width: 140px !important;
+    padding: 8px !important;
+    margin: 5px !important;
+    font-size: 12px !important;
+    background: #e0f0ff;
+    border-radius: 10px;
+    box-shadow: 0 3px 10px rgba(0, 60, 100, 0.1);
+    box-sizing: border-box;
+    flex-shrink: 0;
+}
+
+/* Đảm bảo phần chính chiếm hết không gian */
+.container {
+    flex: 1 !important;
+    min-width: 400px;
+    margin: 0 20px !important;
+}
+
+/* Buộc phần phải nằm sát lề */
+.main-content-wrapper {
+    justify-content: space-between !important;
+    align-items: flex-start;
+}
+
+.leaderboard, .badge-section {
+    margin-left: 10px !important;
+    margin-right: 0 !important;
+}
 
 
