@@ -683,5 +683,60 @@ footer {
     margin-left: 10px !important;
     margin-right: 0 !important;
 }
+/* CĂN GIỮA CHO LAPTOP & DESKTOP */
+.main-content-wrapper {
+    justify-content: center !important;
+    gap: 20px;
+}
+
+.container {
+    margin: 0 auto !important;
+    flex: 0 1 auto !important;
+}
+
+.leaderboard, .badge-section {
+    margin-left: auto !important;
+}
+
+/* RESPONSIVE CHO TABLET */
+@media (max-width: 1024px) {
+    .main-content-wrapper {
+        gap: 15px;
+    }
+    
+    .container {
+        max-width: 500px;
+    }
+}
+
+/* RESPONSIVE CHO MOBILE */
+@media (max-width: 768px) {
+    .main-content-wrapper {
+        flex-direction: column;
+        align-items: center !important;
+        gap: 10px;
+    }
+    
+    .container, .leaderboard, .badge-section {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 5px 0 !important;
+    }
+    
+    .leaderboard, .badge-section {
+        margin-left: 0 !important;
+    }
+}
+
+/* RESPONSIVE CHO SMALL MOBILE */
+@media (max-width: 480px) {
+    .main-content-wrapper {
+        padding: 5px;
+    }
+    
+    .container {
+        padding: 10px;
+    }
+}
 
 
