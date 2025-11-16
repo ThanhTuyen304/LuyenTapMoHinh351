@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini Game - 3-5-1 Shield</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .game-container {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .scam-display {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2em;
+            border: 3px solid #007acc;
+        }
+        
+        .timer {
+            font-size: 3em;
+            font-weight: bold;
+            color: #ff4444;
+            margin: 20px 0;
+        }
+        
+        .game-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+        
+        .game-btn {
+            padding: 15px 30px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        
+        .btn-scam {
+            background: #ff4444;
+            color: white;
+        }
+        
+        .btn-safe {
+            background: #00c851;
+            color: white;
+        }
+        
+        .game-stats {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+            font-size: 1.1em;
+        }
+        
+        .result-feedback {
+            font-size: 1.3em;
+            font-weight: bold;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 8px;
+        }
+        
+        .correct {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .wrong {
+            background: #f8d7da;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="main-nav">
+        <div class="logo"><i class="fa-solid fa-shield-halved"></i> 3-5-1 Shield</div>
+        <ul>
+            <li><a href="index.html">Trang Chủ</a></li>
+            <li><a href="training.html">Luyện Tập</a></li>
+            <li><a href="resources.html">Tài Nguyên</a></li>
+            <li><a href="minigame.html" class="active">Mini Game</a></li>
+            <li><a href="leaderboard.html">Bảng Xếp Hạng</a></li>
+        </ul>
+    </nav>
+
+    <div class="homepage-container">
+        <div class="hero-section">
+            <h1><i class="fa-solid fa-gamepad"></i> Mini Game Nhận Diện</h1>
+            <p class="tagline">Phản ứng nhanh trong 5 giây - Rèn luyện phản xạ chống lừa đảo!</p>
+        </div>
+
+        <div class="game-container">
+            <div class="card">
+                <h2>Luật chơi</h2>
+                <p>Bạn có <strong>5 giây</strong> để quyết định tình huống này là <strong>LỪA ĐẢO</strong> hay <strong>AN TOÀN</strong>!</p>
+            </div>
+
+            <div class="game-stats">
+                <div>Điểm: <span id="game-score">0</span></div>
+                <div>Đúng: <span id="game-correct">0</span>/<span id="game-total">0</span></div>
+                <div>Thời gian: <span id="game-time">5</span>s</div>
+            </div>
+
+            <div class="scam-display" id="scam-text">
+                Nhấn BẮT ĐẦU để chơi!
+            </div>
+
+            <div class="timer" id="timer">5</div>
+
+            <div class="result-feedback" id="feedback"></div>
+
+            <div class="game-buttons">
+                <button class="game-btn btn-scam" onclick="makeGuess('scam')" id="btn-scam" disabled>🚨 LỪA ĐẢO</button>
+                <button class="game-btn btn-safe" onclick="makeGuess('safe')" id="btn-safe" disabled>✅ AN TOÀN</button>
+            </div>
+
+            <button class="btn" onclick="startGame()" id="start-btn">🎮 BẮT ĐẦU CHƠI</button>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 3-5-1 Shield. Luyện tập để an toàn hơn!</p>
+    </footer>
+
+    <script>
+        const miniGameScenarios = [
+            { text: "Chúc mừng bạn trúng thưởng iPhone 14! Click link để nhận quà ngay!", answer: "scam" },
+            { text: "Thông báo từ ngân hàng: Bạn vừa nhận được chuyển khoản 5,000,000 VND", answer: "safe" },
+            { text: "Tài khoản của bạn sẽ bị khóa trong 30 phút nếu không xác minh ngay!", answer: "scam" },
+            { text: "Xin chào, tôi là nhân viên bưu điện. Bạn có bưu kiện chờ nhận", answer: "safe" },
+            { text: "Đầu tư tiền ảo sinh lời 300% trong 24h. Tham gia ngay!", answer: "scam" },
+            { text: "Thông báo bảo trì hệ thống từ nhà cung cấp dịch vụ chính thức", answer: "safe" },
+            { text: "Máy tính của bạn đã bị nhiễm virus! Gọi số này để được hỗ trợ miễn phí", answer: "scam" }
+        ];
+
+        let currentScenario = null;
+        let gameScore = 0;
+        let correctAnswers = 0;
+        let totalQuestions = 0;
+        let timeLeft = 5;
+        let timerInterval = null;
+        let gameActive = false;
+
+        function startGame() {
+            gameScore = 0;
+            correctAnswers = 0;
+            totalQuestions = 0;
+            document.getElementById('game-score').textContent = '0';
+            document.getElementById('game-correct').textContent = '0';
+            document.getElementById('game-total').textContent = '0';
+            document.getElementById('start-btn').disabled = true;
+            document.getElementById('btn-scam').disabled = false;
+            document.getElementById('btn-safe').disabled = false;
+            
+            nextQuestion();
+        }
+
+        function nextQuestion() {
+            if (!gameActive) {
+                gameActive = true;
+            }
+            
+            // Chọn scenario ngẫu nhiên
+            const randomIndex = Math.floor(Math.random() * miniGameScenarios.length);
+            currentScenario = miniGameScenarios[randomIndex];
+            
+            document.getElementById('scam-text').textContent = currentScenario.text;
+            document.getElementById('feedback').textContent = '';
+            document.getElementById('feedback').className = 'result-feedback';
+            
+            timeLeft = 5;
+            document.getElementById('timer').textContent = timeLeft;
+            document.getElementById('timer').style.color = '#ff4444';
+            
+            // Bắt đầu đếm ngược
+            clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                document.getElementById('timer').textContent = timeLeft;
+                
+                if (timeLeft <= 3) {
+                    document.getElementById('timer').style.color = '#ff0000';
+                }
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    showResult(false, '⏰ Hết thời gian!');
+                }
+            }, 1000);
+        }
+
+        function makeGuess(guess) {
+            if (!gameActive || timeLeft <= 0) return;
+            
+            clearInterval(timerInterval);
+            const isCorrect = guess === currentScenario.answer;
+            
+            showResult(isCorrect, isCorrect ? '🎉 CHÍNH XÁC!' : '❌ SAI RỒI!');
+        }
+
+        function showResult(isCorrect, message) {
+            gameActive = false;
+            
+            if (isCorrect) {
+                gameScore += 10;
+                correctAnswers++;
+                document.getElementById('feedback').className = 'result-feedback correct';
+            } else {
+                document.getElementById('feedback').className = 'result-feedback wrong';
+            }
+            
+            totalQuestions++;
+            document.getElementById('game-score').textContent = gameScore;
+            document.getElementById('game-correct').textContent = correctAnswers;
+            document.getElementById('game-total').textContent = totalQuestions;
+            document.getElementById('feedback').textContent = message;
+            
+            // Chuyển câu hỏi sau 2 giây
+            setTimeout(() => {
+                if (totalQuestions < 10) {
+                    nextQuestion();
+                } else {
+                    endGame();
+                }
+            }, 2000);
+        }
+
+        function endGame() {
+            document.getElementById('start-btn').disabled = false;
+            document.getElementById('btn-scam').disabled = true;
+            document.getElementById('btn-safe').disabled = true;
+            document.getElementById('scam-text').textContent = 'Hoàn thành! Điểm của bạn: ' + gameScore;
+            document.getElementById('timer').textContent = '🎮';
+            
+            alert(`🎊 Kết thúc game!\nĐiểm: ${gameScore}\nTỷ lệ đúng: ${Math.round((correctAnswers/totalQuestions)*100)}%`);
+        }
+    </script>
+</body>
+</html>
