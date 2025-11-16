@@ -111,21 +111,6 @@ header h1 i {
     box-sizing: border-box;
 }
 
-/* LEADERBOARD */
-.leaderboard {
-    width: 100%;
-    max-width: 320px;
-    background: #e0f0ff;
-    padding: 15px;
-    border-radius: 15px;
-    box-shadow: 0 5px 18px rgba(0, 60, 100, 0.1);
-    box-sizing: border-box;
-}
-
-.leaderboard ol {
-    padding-left: 20px;
-}
-
 /* TRANG CHỦ (INDEX.HTML) */
 .homepage-container {
     max-width: 900px;
@@ -652,4 +637,5 @@ footer {
 .leaderboard, .badge-section {
     margin-left: 20px;
 }
+
 
