@@ -325,7 +325,10 @@ function updateLeaderboard() {
         }
         return a.attempts - b.attempts;
     });
-
+  const newBadges = badgeSystem.checkBadges(score, scamScore, 0);
+    newBadges.forEach(badge => badgeSystem.showBadgeNotification(badge));
+    badgeSystem.displayBadges();
+    
     const listEl = document.getElementById("leaderboard-list");
     listEl.innerHTML = '';
 
@@ -473,4 +476,5 @@ const badgeCSS = `
 const style = document.createElement('style');
 style.textContent = badgeCSS;
 document.head.appendChild(style);
+
 
