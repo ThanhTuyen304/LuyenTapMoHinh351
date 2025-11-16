@@ -636,4 +636,20 @@ footer {
     font-size: 10px;
     margin: 1px 0;
 }
+/* ĐẨY BẢNG XẾP HẠNG VÀ HUY HIỆU QUA PHẢI - TÌNH HUỐNG Ở GIỮA */
+.main-content-wrapper {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.container {
+    flex: 1;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.leaderboard, .badge-section {
+    margin-left: 20px;
+}
 
