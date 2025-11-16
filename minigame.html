@@ -137,18 +137,13 @@
     </footer>
 
     <script>
-        const miniGameScenarios = [
-            { text: "Chúc mừng bạn trúng thưởng iPhone 14! Click link để nhận quà ngay!", answer: "scam" },
-            { text: "Thông báo từ ngân hàng: Bạn vừa nhận được chuyển khoản 5,000,000 VND", answer: "safe" },
-            { text: "Tài khoản của bạn sẽ bị khóa trong 30 phút nếu không xác minh ngay!", answer: "scam" },
-            { text: "Xin chào, tôi là nhân viên bưu điện. Bạn có bưu kiện chờ nhận", answer: "safe" },
-            { text: "Đầu tư tiền ảo sinh lời 300% trong 24h. Tham gia ngay!", answer: "scam" },
-            { text: "Thông báo bảo trì hệ thống từ nhà cung cấp dịch vụ chính thức", answer: "safe" },
+   const miniGameScenarios = [
     { text: "Chúc mừng bạn trúng thưởng iPhone 14! Click link để nhận quà ngay!", answer: "scam" },
     { text: "Thông báo từ ngân hàng: Bạn vừa nhận được chuyển khoản 5,000,000 VND", answer: "safe" },
     { text: "Tài khoản của bạn sẽ bị khóa trong 30 phút nếu không xác minh ngay!", answer: "scam" },
-    { text: "Tin nhắn từ ngân hàng: Thẻ của bạn vừa được sử dụng tại siêu thị", answer: "safe" },
-    { text: "Email: Bạn có khoản nợ thuế 15 triệu. Thanh toán ngay để tránh phạt!", answer: "scam" },
+    { text: "Xin chào, tôi là nhân viên bưu điện. Bạn có bưu kiện chờ nhận", answer: "safe" },
+    { text: "Đầu tư tiền ảo sinh lời 300% trong 24h. Tham gia ngay!", answer: "scam" },
+    { text: "Thông báo bảo trì hệ thống từ nhà cung cấp dịch vụ chính thức", answer: "safe" },
 
     // === MẠNG XÃ HỘI & TÀI KHOẢN ===
     { text: "Facebook: Tài khoản của bạn bị báo cáo vi phạm. Click để kháng cáo trong 24h", answer: "scam" },
@@ -199,8 +194,8 @@
     // === BẢO HIỂM ===
     { text: "Công ty bảo hiểm: Hợp đồng bảo hiểm của bạn sắp hết hạn gia hạn", answer: "safe" },
     { text: "Email: Bạn được tặng gói bảo hiểm sức khỏe miễn phí 6 tháng!", answer: "scam" },
-            { text: "Máy tính của bạn đã bị nhiễm virus! Gọi số này để được hỗ trợ miễn phí", answer: "scam" }
-        ];
+    { text: "Máy tính của bạn đã bị nhiễm virus! Gọi số này để được hỗ trợ miễn phí", answer: "scam" }
+];
 
         let currentScenario = null;
         let gameScore = 0;
