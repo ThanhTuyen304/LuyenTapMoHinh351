@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luyện Tập 3–5–1 - Bài Tập</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.js"></script>
+</head>
+<body>
+    
+    <nav class="main-nav">
+        <div class="logo"><i class="fa-solid fa-shield-halved"></i> 3-5-1 Shield</div>
+        <ul>
+            <li><a href="index.html">Trang Chủ</a></li>
+            <li><a href="training.html" class="active">Luyện Tập</a></li>
+            <li><a href="index.html#guide-section">Quy Tắc 3–5–1</a></li>
+            <li><a href="leaderboard.html">Bảng Xếp Hạng</a></li>
+        </ul>
+    </nav>
+
+    <header>
+        <h1><i class="fa-solid fa-dumbbell"></i> Luyện Tập Phản Ứng</h1>
+        <div class="toolbar">
+            <button onclick="runDemo()"><i class="fa-solid fa-play"></i> Bắt đầu</button>
+            <button onclick="resetGame()"><i class="fa-solid fa-rotate-left"></i> Reset</button>
+            <button onclick="toggleHint()"><i class="fa-solid fa-circle-question"></i> Hướng dẫn</button>
+        </div>
+    </header>
+
+    <div class="main-content-wrapper">
+        <div class="container">
+            <div id="progress-container">
+                <div id="progress-bar"></div>
+            </div>
+            <p id="progress-text">Bài 0 / 10</p>
+            <p id="score">Điểm: 0 | Lỗi: 0</p>
+            
+            <hr>
+
+            <div class="card fade" id="scenario-box">
+                <h2>Tình huống <i class="fa-solid fa-envelope"></i></h2>
+                <p id="scenario">Nhấn **Bắt đầu** để hiện tình huống luyện tập đầu tiên.</p>
+            </div>
+
+            <div class="card fade" id="step-3s">
+                <h3>3 giây: Xác định cảm xúc <i class="fa-solid fa-face-meh"></i></h3>
+                <select id="emotion">
+                    <option value="">-- Chọn cảm xúc --</option>
+                    <option>Lo lắng (Sợ bị mất tiền/khoản nợ)</option>
+                    <option>Tham lam (Trúng thưởng, nhận quà)</option>
+                    <option>Bất ngờ (Thông tin đột ngột, tài khoản bị khóa)</option>
+                    <option>Nghi ngờ (Mọi thứ đều có thể là lừa đảo)</option>
+                </select>
+            </div>
+
+            <div class="card fade" id="step-5check">
+                <h3>5 bước kiểm tra <i class="fa-solid fa-check-double"></i></h3>
+                <label><input type="checkbox" class="check"> Kiểm tra đường link/số điện thoại</label><br>
+                <label><input type="checkbox" class="check"> Kiểm tra người gửi/người gọi</label><br>
+                <label><input type="checkbox" class="check"> Kiểm tra yêu cầu hành động gấp</label><br>
+                <label><input type="checkbox" class="check"> Kiểm tra lỗi chính tả/ngữ pháp</label><br>
+                <label><input type="checkbox" class="check"> Kiểm tra dấu hiệu bất thường (lợi ích/nguy cơ không có thật)</label><br>
+            </div>
+
+  <div class="card fade" id="step-1decision">
+                <h3>1 quyết định <i class="fa-solid fa-gavel"></i></h3>
+                <select id="decision">
+                    <option value="">-- Chọn hành động --</option>
+                    <option value="Báo cáo lừa đảo">Báo cáo lừa đảo (Report Scam)</option>
+                    <option value="Xác minh thêm">Xác minh thêm (Tự gọi/Tự vào trang web chính thức)</option>
+                    <option value="Bỏ qua">Bỏ qua (Delete/Block)</option> <!-- ĐÃ FIX LỖI -->
+                    <option value="Thực hiện theo yêu cầu">Thực hiện theo yêu cầu (Action - LUÔN LUÔN SAI)</option>
+                </select>
+            </div>
+
+            <div class="btn-group">
+                <button class="btn" onclick="submitAnswers()">Nộp kết quả</button>
+            </div>
+
+            <p id="result" class="message"></p>
+            <p id="explanation" class="message"></p>
+            <div id="next-btn-container"></div>
+            
+            <hr>
+
+        </div>
+        
+        <div class="leaderboard fade">
+            <h3>Bảng xếp hạng</h3>
+            <ol id="leaderboard-list"></ol>
+        </div>
+
+    </div>
+
+    <div id="badge-modal" class="modal">
+        <div class="modal-content scale">
+            <span class="close" onclick="closeBadge()">&times;</span>
+            <h2>🎉 HOÀN THÀNH!</h2>
+            <p id="badge-text"></p>
+        </div>
+    </div>
+
+    <audio id="sound-correct" src="audio/correct.mp3"></audio> 
+    <audio id="sound-wrong" src="audio/wrong.mp3"></audio>
+
+    <script src="script.js"></script>
+</body>
+</html>
