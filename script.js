@@ -342,4 +342,76 @@ function updateLeaderboard() {
 
 function closeBadge() {
     document.getElementById("badge-modal").style.display = "none";
+
 }
+// Hệ thống huy hiệu
+const badgeSystem = {
+    badges: [
+        { id: 1, name: "🔰 Người Mới", description: "Hoàn thành bài tập đầu tiên", earned: false },
+        { id: 2, name: "🛡️ Cảnh Giác", description: "Đạt 100 điểm", earned: false },
+        { id: 3, name: "🎯 Chính Xác", description: "Trả lời đúng 5 câu liên tiếp", earned: false },
+        { id: 4, name: "🚀 Tốc Độ", description: "Hoàn thành 7 bài trong 10 phút", earned: false },
+        { id: 5, name: "💎 Chuyên Gia", description: "Đạt 200 điểm với ít hơn 10 lỗi", earned: false }
+    ],
+
+    checkBadges: function(score, scamScore, consecutiveCorrect) {
+        const newBadges = [];
+        
+        // Người mới
+        if (score >= 15 && !this.badges[0].earned) {
+            this.badges[0].earned = true;
+            newBadges.push(this.badges[0]);
+        }
+        
+        // Cảnh giác
+        if (score >= 100 && !this.badges[1].earned) {
+            this.badges[1].earned = true;
+            newBadges.push(this.badges[1]);
+        }
+        
+        // Chính xác
+        if (consecutiveCorrect >= 5 && !this.badges[2].earned) {
+            this.badges[2].earned = true;
+            newBadges.push(this.badges[2]);
+        }
+        
+        // Chuyên gia
+        if (score >= 200 && scamScore < 10 && !this.badges[4].earned) {
+            this.badges[4].earned = true;
+            newBadges.push(this.badges[4]);
+        }
+        
+        return newBadges;
+    },
+
+    showBadgeNotification: function(badge) {
+        const notification = document.createElement('div');
+        notification.className = 'badge-notification';
+        notification.innerHTML = `
+            <h3>🎉 Đạt được huy hiệu mới!</h3>
+            <strong>${badge.name}</strong>
+            <p>${badge.description}</p>
+        `;
+        
+        document.body.appendChild(notification);
+        
+        setTimeout(() => {
+            notification.remove();
+        }, 5000);
+    },
+
+    displayBadges: function() {
+        const badgeContainer = document.getElementById('badge-container');
+        if (!badgeContainer) return;
+        
+        badgeContainer.innerHTML = this.badges.map(badge => `
+            <div class="badge-item ${badge.earned ? 'earned' : 'locked'}">
+                <div class="badge-icon">${badge.earned ? badge.name.split(' ')[0] : '🔒'}</div>
+                <div class="badge-info">
+                    <strong>${badge.name}</strong>
+                    <p>${badge.description}</p>
+                </div>
+            </div>
+        `).join('');
+    }
+};
