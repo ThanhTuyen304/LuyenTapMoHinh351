@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tài Nguyên Học Tập - 3-5-1 Shield</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <nav class="main-nav">
+        <div class="logo"><i class="fa-solid fa-shield-halved"></i> 3-5-1 Shield</div>
+        <ul>
+            <li><a href="index.html">Trang Chủ</a></li>
+            <li><a href="training.html">Luyện Tập</a></li>
+            <li><a href="resources.html" class="active">Tài Nguyên</a></li>
+            <li><a href="minigame.html">Mini Game</a></li>
+            <li><a href="leaderboard.html">Bảng Xếp Hạng</a></li>
+        </ul>
+    </nav>
+
+    <div class="homepage-container">
+        <div class="hero-section">
+            <h1><i class="fa-solid fa-book"></i> Tài Nguyên Học Tập</h1>
+            <p class="tagline">Nâng cao kiến thức phòng chống lừa đảo với các tài liệu chuyên sâu</p>
+        </div>
+
+        <div class="resource-categories">
+            <!-- Cẩm nang -->
+            <div class="card">
+                <h3><i class="fa-solid fa-file-pdf"></i> Cẩm Nang Phòng Chống Lừa Đảo</h3>
+                <div class="resource-list">
+                    <div class="resource-item">
+                        <i class="fa-solid fa-download"></i>
+                        <span>Cẩm nang nhận diện Email lừa đảo</span>
+                        <button class="btn-small" onclick="downloadResource('email_guide.pdf')">Tải về</button>
+                    </div>
+                    <div class="resource-item">
+                        <i class="fa-solid fa-download"></i>
+                        <span>Hướng dẫn bảo mật tài khoản mạng xã hội</span>
+                        <button class="btn-small" onclick="downloadResource('social_security.pdf')">Tải về</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video -->
+            <div class="card">
+                <h3><i class="fa-solid fa-video"></i> Video Hướng Dẫn</h3>
+                <div class="video-grid">
+                    <div class="video-item">
+                        <div class="video-placeholder">
+                            <i class="fa-solid fa-play"></i>
+                        </div>
+                        <p>Nhận diện tin nhắn lừa đảo qua SMS</p>
+                    </div>
+                    <div class="video-item">
+                        <div class="video-placeholder">
+                            <i class="fa-solid fa-play"></i>
+                        </div>
+                        <p>5 dấu hiệu website giả mạo</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Case Study -->
+            <div class="card">
+                <h3><i class="fa-solid fa-chart-line"></i> Case Study Thực Tế</h3>
+                <div class="case-studies">
+                    <div class="case-item">
+                        <h4>Vụ lừa đảo mạo danh ngân hàng</h4>
+                        <p>Phân tích chi tiết cách kẻ lừa đảo giả mạo email ngân hàng và bài học kinh nghiệm...</p>
+                        <button class="btn-small" onclick="readCaseStudy(1)">Đọc tiếp</button>
+                    </div>
+                    <div class="case-item">
+                        <h4>Lừa đảo đầu tư tiền ảo</h4>
+                        <p>Các chiêu trò lừa đảo trong lĩnh vực đầu tư cryptocurrency và cách phòng tránh...</p>
+                        <button class="btn-small" onclick="readCaseStudy(2)">Đọc tiếp</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 3-5-1 Shield. Luyện tập để an toàn hơn!</p>
+    </footer>
+
+    <script>
+        function downloadResource(filename) {
+            alert(`Tải về: ${filename}\n(Tính năng đang phát triển)`);
+        }
+
+        function readCaseStudy(id) {
+            alert(`Mở Case Study #${id}\n(Tính năng đang phát triển)`);
+        }
+    </script>
+</body>
+</html>
